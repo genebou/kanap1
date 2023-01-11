@@ -21,6 +21,15 @@ fetch("http://localhost:3000/api/products/" + productId)
         document.getElementById('price').innerHTML = data.price
     }
 )
+document.createElement('option')
+option.vaue = "sdds"
+option.innerHTML = "sadsasad"
+document.getElementById('leselect').appendChild(option)
+
+<select>
+<option value="blue">Canape Bleu tres joli</option>
+<option value="pink">Canape Rose</option>
+</select>
 
 
 
