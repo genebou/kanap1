@@ -30,6 +30,7 @@ document.getElementById('leselect').appendChild(option)
 <option value="blue">Canape Bleu tres joli</option>
 <option value="pink">Canape Rose</option>
 </select>
+//test//
 
 
 
