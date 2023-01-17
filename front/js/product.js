@@ -14,18 +14,24 @@ fetch("http://localhost:3000/api/products/" + productId)
 .then((res) => res.json())
 .then((data) => {
     console.log(data)
-    const article = pieces[0];
-
-         let img = document.createElement('img')
+        let img = document.createElement('img')
         img.src = data.imageUrl
         img.alt = data.altTxt
         document.getElementsByClassName('item__img')[0].appendChild(img)
-        item_img.innerText = data.item_img
+        description.innerText = data.item_img
         document.getElementById('price').innerHTML = data.price
         price.innerText = 'Prix :${data.price} €';
 
     }
 )
+// Récupération des pièces depuis le fichier JSON
+const reponse = await fetch("http://localhost:3000/api/products/" + productId);
+const informationsArticle = await reponse.json();
+const informationsArticle = document.querySelector(".item");
+informationsArcticle.appendChild(img.src);
+informationsArticle.appendChild(img.alt);
+informationsArticle.appendChild(description.innerText);
+informationsArticle.appendChild(price.innerText);
 function products (name,price,description,altTxt,colors){
     this.name = name;
     this.price = price;
@@ -61,11 +67,11 @@ document.getElementById('leselect').appendChild(option)
       //  quantity: quantityValue,
       //  image: document.getElementById("productImage").src,
       //  title: title.innerText,
-       / color: color,
+     //  / color: color,
   //  };
   //  let cart = localStorage.getItem("products");
   //  if (cart == null) {
-        cart = [];
+      //  cart = [];
   //  }else {
    //     cart =JSON.parse(cart);
   //  }
