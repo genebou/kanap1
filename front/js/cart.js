@@ -22,5 +22,6 @@ let article = document.createElement('Article')
 let cartItem= document.getElementsByClassName('cart_item').getElementsById('article')
 let cartItemImg = document.createElement('cart_item_img')
 document.getElementsByClassName('cart_item_img').appendChild(article)
+
 }
 )
