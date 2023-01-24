@@ -34,16 +34,25 @@ document.getElementById('addToCart').addEventListener('click',onAddToBasket)
         function onAddToBasket(event) {
                 let item =
                 {
-                    id: '_id',
-                    color:'vert',
-                    quantity:1,
+                    id: productId,
+                    color : "je ne sais pas comment faire",
+                    quantité: 8,
                 }
-            localStorage.setItem('Basketitems', JSON.stringify(item))
+            window.localStorage.setItem('Basketitems', JSON.stringify(item))
         }
-
+        //stockage de l'ID, quantité, image et couleur dans le localstorage
+        localStorage.getItem('Basketitems')
+                     
+           // let quantityValue = parseInt(quantity.value);
+           // if (color === "" && quantityValue === 0){
+             //   console.log(colorInput.value);
+            //    alert("Vous devez sélectionner une couleur et une quantité")
+          //  }
+           
         
+     //   let productOrder ={
+    //  id: '_id',
 
-
-
-
-
+     //        };
+            
+        
