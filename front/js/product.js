@@ -6,10 +6,9 @@ function getParams(url = window.location) {
     return params;
 }
 function onAddToBasket(event) {
-    // let colorSelect = document.getElementById('colors')
+    
     const selectedColor = colors.options[colors.selectedIndex].value
-    // let quantity = document.getElementById('quantity')
-    // let selectedQuantity = quantity.value
+   
     let found = false
     for (let i = 0 ; i < basketItems.length; i++) {
         if (basketItems[i].id == productId && basketItems[i].color == selectedColor) {
