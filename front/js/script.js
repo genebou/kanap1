@@ -24,5 +24,5 @@ fetch("http://localhost:3000/api/products")
         
         document.getElementById('items').appendChild(a)
     }
-    // addProducts(data) test github
+   
 })

@@ -19,7 +19,8 @@ fetch("http://localhost:3000/api/products/")
 console.log(data)
 
 let article = document.createElement('Article')
-let cartItem= document.getElementsByClassName('cart_item').getElementsById('article')
+let cartItem= document.getElementsByClassName('cart_item')
+
 let cartItemImg = document.createElement('cart_item_img')
 document.getElementsByClassName('cart_item_img').appendChild(article)
 

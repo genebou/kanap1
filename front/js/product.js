@@ -5,17 +5,26 @@ function getParams(url = window.location) {
     });
     return params;
 }
+// ajouter au panier
 function onAddToBasket(event) {
+    // ajouter la couleur
+    // colors => fichier JSON
+    //value => fichier product.html
     const selectedColor = colors.options[colors.selectedIndex].value
     let found = false
     for (let i = 0 ; i < basketItems.length; i++) {
+        // si ce canapé a déjà été choisi 
+        //et donc mis dans le panier avec la même couleur 
+        //alors la qté = la nouvelle qté + celle qui était déjà dans le panier
         if (basketItems[i].id == productId && basketItems[i].color == selectedColor) {
             basketItems[i].quantity = parseInt (basketItems[i].quantity ) + parseInt ( quantity.value )
             found = true
+            // sinon, on arrête la boucle
             break;
         }        
     }
-    if (!found) {        
+    if (!found) { 
+        // si le canapé dans ce coloris n'a pas déjà été mos dans le panier
         let Kanap =
         {
             id: productId,
@@ -27,14 +36,13 @@ function onAddToBasket(event) {
     localStorage.setItem('Basketitems', JSON.stringify(basketItems))
 }
 var basketItems = JSON.parse(localStorage.getItem('Basketitems'));
+// si rien n'est ajouté dans basketItems => on ne rajoute rien dans le localStorage
 if (basketItems == null) {
     basketItems = []
 }
+// les produits sont ajoutés dans le localStorage
 let params = getParams()
 var productId = params['id']
-/* if (typeof productId == "undefined" || productId == 0) {
-    window.location.href = "/404.html";
-} */
 // console.log("Affichage du produit : " + productId)
 fetch("http://localhost:3000/api/products/" + productId)
     .then((res) => res.json())
@@ -56,4 +64,6 @@ fetch("http://localhost:3000/api/products/" + productId)
         }
     }
 )
+
+
 document.getElementById('addToCart').addEventListener('click', onAddToBasket)
