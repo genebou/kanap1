@@ -6,9 +6,7 @@ function getParams(url = window.location) {
     return params;
 }
 function onAddToBasket(event) {
-    
     const selectedColor = colors.options[colors.selectedIndex].value
-   
     let found = false
     for (let i = 0 ; i < basketItems.length; i++) {
         if (basketItems[i].id == productId && basketItems[i].color == selectedColor) {
