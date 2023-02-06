@@ -1,39 +1,38 @@
 
-
-
-//Récupération des canapés eventuellement stockées dans le localStorage
 var basketItems = window.localStorage.getItem('Basketitems');
 if (basketItems === null){
     basketItems=[]
 }
 else{
     basketItems=JSON.parse(basketItems)
-    
 }
 console.log(basketItems)
 async function renderBasket(){
- for( let i = 0 ; i < basketItems.length; i++ ){
-let res  = await fetch('http://localhost:3000/api/products/'+ basketItems[i].id)
-let product = await res.json()
-console.log(product)
- }
+  for( let i = 0 ; i < basketItems.length; i++ ){
+    let res  = await fetch('http://localhost:3000/api/products/'+ basketItems[i].id)
+    let product = await res.json()
+    console.log(product)
+    let cartItem = document.createElement('section')
+    cartItem.innerHTML= product.name
+    document.getElementById('cart__items').appendChild(cartItem)
+  }
 }
 renderBasket()
-  
-       .then((data) => {
-        console.log()
+
+
+
  /*<!--<article class="cart__item" data-id="{product-ID}" data-color="{product-color}">
 */
 // création des balises HTML qui vont permettent d'afficher
 // sur le site le résultat de la function renderBasket, 
 //c'est à dire pour chaque Kanap sélectionné dans le panier
-
+/*function renderItem(item){
 for (let i = 0; i< basketItems.lenght; i++){
     let items = basketItems[i];
     let data = product(items.id);
 
     document.getElementById('cart_items').innerHTML
-    let cartItem = createElement('.cart_item')
+    
     cart_items.appendChild(cartItem)
     cartItem.innerHTML +=  '"${items.id}" "${items.color}"'
     
@@ -86,22 +85,12 @@ for (let i = 0; i< basketItems.lenght; i++){
         
         
     console.log()
-    }
-
+    }*/
+  
 
     
-        basketItems.push(itemQuantity);
-
-
-
-//<div class ="cart_item_content_settings_delete"
-cartItemContentSettingsDelete = createElement(cart_item_content_settings_delete)
-cartItemContentSettings.appendChild(cartItemContentSettingsDelete)
-let deleteItem = createElement(p)
-cartItemContentSettingsDelete.appendChild(deleteItem)
-deleteItem.innerHTML="Supprimer"
-  }
-   }   )
+        
+/*
    
   // calcul du prix du panier  
     function TotalBasketPrice() {
