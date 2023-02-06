@@ -12,6 +12,7 @@ async function renderBasket(){
     let res  = await fetch('http://localhost:3000/api/products/'+ basketItems[i].id)
     let product = await res.json()
     console.log(product)
+    
       let cartItem = document.createElement('article')
       cartItem.innerHTML= product.colors[i]
       document.getElementById('cart__items').appendChild(cartItem)
@@ -46,13 +47,34 @@ async function renderBasket(){
         const productPrice = document.createElement("p");
         productPrice.innerText = `Prix: ${product.price} €`;
         cartItemContentDescription.appendChild(productPrice)
-        
-         }  
-    }
-  
+           
 
-renderBasket()
-console.log(renderBasket)
+        let cartItemContentSettings = document.createElement('div')
+      cartItemContentSettings.classList.add('cart__item__content__settings')
+      cartItemContent.appendChild(cartItemContentSettings)
+
+      let cartItemContentSettingsQuantity = document.createElement('div')
+      cartItemContentSettingsQuantity.classList.add('cart__item__content__settings__quantity')
+      cartItemContentSettings.appendChild(cartItemContentSettingsQuantity)
+
+      let quantityProduct = document.createElement('p')
+      cartItemContentSettingsQuantity.appendChild(quantityProduct)
+      quantityProduct.innerHTML="Qté :"
+
+      let inputProduct = document.createElement('p')
+      cartItemContentSettingsQuantity.appendChild(inputProduct)
+      inputProduct.classList.add('itemQuantity')
+      inputProduct.innerHTML= `${basketItems[i].quantity}`
+      
+
+
+    }
+  }
+
+  
+    renderBasket()
+    console.log(renderBasket)
+
 alert(3)
   
 
