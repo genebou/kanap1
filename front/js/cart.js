@@ -87,8 +87,11 @@ for (let i = 0; i< basketItems.lenght; i++){
         
     console.log()
     }
+
+
     
         basketItems.push(itemQuantity);
+
 
 
 //<div class ="cart_item_content_settings_delete"
@@ -98,6 +101,7 @@ let deleteItem = createElement(p)
 cartItemContentSettingsDelete.appendChild(deleteItem)
 deleteItem.innerHTML="Supprimer"
   }
+   }   )
    
   // calcul du prix du panier  
     function TotalBasketPrice() {
@@ -152,4 +156,4 @@ cartItemContent.appendChild(article)
 /*let cartItemImg = document.createElement('cart_item_img')
 cartItem.appenChild(cartItemImg)
 document.getElementsById('cart_items')
-       */ })
+       */ 
