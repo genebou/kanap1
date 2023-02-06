@@ -58,7 +58,8 @@ fetch("http://localhost:3000/api/products/" + productId)
             document.getElementById('colors').appendChild(option)
         }
     }
-)
+    )
 document.getElementById('addToCart').addEventListener('click', onAddToBasket)
+    
 
 
