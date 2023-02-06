@@ -6,14 +6,14 @@ if (basketItems === null){
 else{
     basketItems=JSON.parse(basketItems)
 }
-console.log(basketItems)
+
 async function renderBasket(){
   for( let i = 0 ; i < basketItems.length; i++ ){
     let res  = await fetch('http://localhost:3000/api/products/'+ basketItems[i].id)
     let product = await res.json()
     console.log(product)
       let cartItem = document.createElement('article')
-      cartItem.innerHTML= product.colors
+      cartItem.innerHTML= product.colors[i]
       document.getElementById('cart__items').appendChild(cartItem)
       cartItem.classList.add('cart__item')
     
@@ -39,18 +39,21 @@ async function renderBasket(){
       cartItemContentDescription.appendChild(h2)
       h2.innerHTML=product.name
 
-      for (let i = 0; i< product.colors.length; i++ ){
-    let productColor = document.createElement('p');
-    cartItemContentDescription.appendChild(productColor);
-    productColor.innerHTML = product.colors[i];
-      }
-      
+        let productColor = document.createElement('p')
+        cartItemContentDescription.appendChild(productColor)
+        productColor.innerHTML = product.colors[i]
+                    
+        const productPrice = document.createElement("p");
+        productPrice.innerText = `Prix: ${product.price} €`;
+        cartItemContentDescription.appendChild(productPrice)
         
          }  
     }
+  
 
 renderBasket()
 console.log(renderBasket)
 alert(3)
+  
 
 
