@@ -24,61 +24,82 @@ renderBasket()
         console.log()
  /*<!--<article class="cart__item" data-id="{product-ID}" data-color="{product-color}">
 */
+// création des balises HTML qui vont permettent d'afficher
+// sur le site le résultat de la function renderBasket, 
+//c'est à dire pour chaque Kanap sélectionné dans le panier
+
 for (let i = 0; i< basketItems.lenght; i++){
     let items = basketItems[i];
-    let data = renderBasket(items.id);
+    let data = product(items.id);
 
     document.getElementById('cart_items').innerHTML
     let cartItem = createElement('.cart_item')
     cart_items.appendChild(cartItem)
     cartItem.innerHTML +=  '"${items.id}" "${items.color}"'
     
-    let cartItemImg = createElement(cart_item_img)
+    let cartItemImg = createElement('cart_Item_Img')
     cartItem.appenchild(cartItemImg)
-    cartItemImg.innerHTML
     let img = document.createElement('img')
     cartItemImg.appendChild(img)
     img.src = data[i].imageUrl
     img.alt = data[i].altText
+    //<div class="cart_item_content"
     let cartItemContent = createElement(cart_item_content)
     cartItem.appendChild(cartItemContent)
-    cartItemContent.innerHTML
+    
+    //<div class ="cart_item_content_description"
     let cartItemContentDescription = createElement(cart_item_content_description)
     cartItemContent.appendChild(cartItemContentDescription)
     cartItemContentDescription.innerHTML +="${items[i].name} {items[i].colors} {items[i].price}"
+      // <h2> Nom du produit</h2>
+        let h2 = createElement(h2)
+        cartItemContentDescription.appendChild(h2)
+        h2.innerHTML=data[i].name
+      //<p> colors</p>
+      let couleur =createElement(p)
+      cartItemContentDescription.appendChild(couleur)
+      couleur.innerHTML=items[i].colors
+      //<p> colors</p>
+      let price = createElement(p)
+      cartItemContentDescription(price)
+      price.innerHTML=data[i].price
+      //<div class ="cart_item_content_settings"
+      let cartItemContentSettings = createElement(cart_item_content_settings)
+     cartItemContent.appendChild(cartItemContentSettings)
+      //<p> Quantité: </p>
+      let quantity = createElement(p)
+      cartItemContentSettings.appendChild(quantity)
+       quantity.innerHTML="Quantité:"
 
-    let h2 = createElement(h2)
-    cartItemContentDescription.appendChild(h2)
-    h2.innerHTML=data[i].name
+       //<div class="cart_item_content_settings_quantity"
+       let cartItemContentSettingsQuantity = createElement(cart_item_content_settings_quantity)
+        cartItemContentSettingsQuantity.appendChild(cartItemContentSettings)
 
-    let couleur =createElement(p)
-    cartItemContentDescription.appendChild(couleur)
-    couleur.innerHTML=items[i].colors
-
-    let price = createElement(p)
-    cartItemContentDescription(price)
-    price.innerHTML=data.price
- let cartItemContentSettings = createElement(cart_item_content_settings)
- cartItemContent.appendChild(cartItemContentSettings)
- let quantity = createElement(p)
- cartItemContentSettings.appendChild(quantity)
- quantity.innerHTML="Quantité"
+       //<input type="number" class="itemQuantity" name="itemQuantity" min ="1"
+      //max ="100" value= "42"
+      
     for (i = 0; 1< i <100;i++) { 
         let itemQuantity = createElement(itemQuantity)
-        cartItemContentSettings.appendChild(itemQuantity)
-        itemQuantity.innerHTML =items[i].quantity
+        cartItemContentSettingsQuantity.appendChild(itemQuantity)
+        itemQuantity.value =data[i].quantity
+
         
         
     console.log()
     }
     
-        basketItems.push(Kanap);
-}
+        basketItems.push(itemQuantity);
 
-TotalBasketPrice()
 
-    
-    
+//<div class ="cart_item_content_settings_delete"
+cartItemContentSettingsDelete = createElement(cart_item_content_settings_delete)
+cartItemContentSettings.appendChild(cartItemContentSettingsDelete)
+let deleteItem = createElement(p)
+cartItemContentSettingsDelete.appendChild(deleteItem)
+deleteItem.innerHTML="Supprimer"
+  }
+   
+  // calcul du prix du panier  
     function TotalBasketPrice() {
         var totalQuantity = 0
         var totalPrice = 0
