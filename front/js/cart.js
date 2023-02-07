@@ -66,7 +66,11 @@ async function renderBasket(){
       inputProduct.classList.add('itemQuantity')
       inputProduct.innerHTML= `${basketItems[i].quantity}`
       
+      let deleteProduct = document.createElement('div')
+      cartItemContentSettings.appendChild(deleteProduct)
+      deleteProduct.classList.add('cart__item__content__settings__delete')
 
+      
 
     }
   }
