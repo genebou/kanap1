@@ -69,13 +69,13 @@ async function renderBasket(){
       supprimer.innerText="Supprimer"
 }
 
-initEvents()
+clickSupprimerItems()
 }
 renderBasket()
 
 //Sélection de la quantité et de la couleur
 // lorsque l'utilisateur va "cliquer" sur le bouton "supprimer"
-function initEvents(){
+function clickSupprimerItems(){
    document.querySelectorAll('.deleteItem').forEach( function(button){
      button.addEventListener("click", function(event){
       let deleteBtn = event.target
@@ -87,8 +87,25 @@ function initEvents(){
     })
     }
   )}
+  //modification de la quantité lorsque l'utilsateur va modifier dans la class .itemQuantity
+function modifQtyItems (){
+  document.querySelectorAll('.itemQuantity').forEach(function(input){
+    input.addEventListener('change',function(event){
+      let modifQty = event.target
+      let itemModifDiv = modifQty.inputProductQuantity.value
+      let itemQtyModif = itemModifDiv.dataset.quantity
+      //let itemIdModif = modifQty.dataset.id
+     // let itemColorModif = modifQty.dataset.color
+      console.log (itemQtyModif)
+     // console.log (itemIdModif +""+ itemQtyModif)
+      deleteBasketQty(itemQtyModif)
+    }
+    )
+  }
+  )
+}
 
-   //modification du basketItems dans le localStorage
+   //modification du basketItems dans le localStorage suite clic sur Btn" supprimer"
   function deleteBasketItems(id,color){
       for (let i=0; i< basketItems.length ;i++){
         if (basketItems[i].id == id && basketItems[i].color == color){
@@ -101,7 +118,18 @@ function initEvents(){
       }
   }
       
-
+ //modification du basketItems dans le localStorage suite modification qté
+ function deleteBasketQty(id, color, quantity){
+  for (let i=0; i<basketItems.length; i++){
+      if ( basketItems[i].quantity == null){
+          deleteBasketItems(id,color);
+        }else {
+          localStorage.setItem('Basketitems', JSON.stringify(basketItems))
+          break;
+        }
+      
+  }
+ }
 
        
                
