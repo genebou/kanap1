@@ -18,8 +18,8 @@ async function renderBasket(){
         cartItem.innerHTML= product.colors[i]
         document.getElementById('cart__items').appendChild(cartItem)
         cartItem.classList.add('cart__item')
-        cartItem.setAttribute("data-ID","product-ID")
-        cartItem.setAttribute("data-color","product-color")
+        cartItem.setAttribute("data-ID",product._id)
+        cartItem.setAttribute("data-color",basketItems[i].color)
       let cartItemImg = document.createElement('div')
         cartItemImg.classList.add('div')
         cartItem.appendChild(cartItemImg)
@@ -68,6 +68,8 @@ async function renderBasket(){
         supprimer.classList.add('deleteItem')
         supprimer.innerText="Supprimer"
 }
+
+initEvents()
 }
 renderBasket()
 
@@ -77,17 +79,21 @@ renderBasket()
 //afin d'envoyer un panier actualisé dans la page confirmation
 
   //document.querySelectorAll('itemQuantity').innerHTML="";
-
-   document.querySelectorAll('deleteItem').addEventListener("click", function(event) {
+function initEvents(){
+   document.querySelectorAll('.deleteItem').forEach( function(button){
+    button.addEventListener("click", function(event){
     let deleteBtn = event.target
-    let itemDiv = deleteBtn.parentNode.parentNode (cartItem)
-    let itemId = itemDiv.dataset.id 
-      console.log(deleteBtn)
-      console.log(newArray)
-  
-    console.log(basketDelete)
-  console.log(basketItems)
-  })
+    let itemDiv = deleteBtn.parentNode.parentNode.parentNode.parentNode
+    let itemId = itemDiv.dataset.id
+    let itemColor = itemDiv.dataset.color
+
+      console.log(itemId+""+itemColor)
+      deleteBasketItems(itemId,itemColor)
+    
+    })
+  }
+   )}
+   /*
   function deleteBasketItems(){
       for (let i=0; i< deleteBtn.length ;i++){
       deleteBtn[i].addEventlistener("click", function (){ 
@@ -121,7 +127,7 @@ deleteBasketItems()
     
  
 
-deleteBasketItems()
+deleteBasketItems()*/
        
                
        
