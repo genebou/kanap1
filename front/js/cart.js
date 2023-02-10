@@ -68,29 +68,36 @@ async function renderBasket(){
         supprimer.classList.add('deleteItem')
         supprimer.innerText="Supprimer"
 }
+}
+renderBasket()
+
 
 
 //création d'une fonction qui ve mettre à jour le basketItem 
 //afin d'envoyer un panier actualisé dans la page confirmation
-function deleteBasketItems(){
+
   //document.querySelectorAll('itemQuantity').innerHTML="";
-   document.querySelectorAll('deleteItem').addEventListener('click', function(event) {
+
+   document.querySelectorAll('deleteItem').addEventListener("click", function(event) {
     let deleteBtn = event.target
-    let itemDiv = deleteBtn.parentNode.parentNode.parentNode // pour remonter dans l'arborescence HTML du bouton vers la div
+    let itemDiv = deleteBtn.parentNode.parentNode (cartItem)
     let itemId = itemDiv.dataset.id 
-  console.log(deleteBtn)
-  let basketDelete =[]
-  console.log(basketDelete)
+      console.log(deleteBtn)
+      console.log(newArray)
+  
+    console.log(basketDelete)
   console.log(basketItems)
+  })
+  function deleteBasketItems(){
       for (let i=0; i< deleteBtn.length ;i++){
       deleteBtn[i].addEventlistener("click", function (){ 
         deleteBtn[i].style.display="none";
         basketDelete = basketItems;
-      for (let i= basketDelete.length -1; i > 0; i--) {
-        delete basketDelete[i].altTxt;
-        delete basketDelete[i].imageUrl;
-        delete basketDelete[i].name;
-        delete basketDelete[i].price;
+      for (let i=basketDelete.length -1; i > 0; i--) {
+        delete item.itemId[i].altTxt;
+        delete itemId[i].imageUrl;
+        delete itemId[i].name;
+        delete itemId[i].price;
 
         basketDelete= basketItems.splice([i],1);
           console.log(basketDelete)
@@ -100,44 +107,17 @@ function deleteBasketItems(){
       )
       
     }
-  })
-}
+  }
+
 deleteBasketItems()
-}
 
 
 
-renderBasket()
 
 
 
- 
-   /* //à chaque click, le basketDelete sera actualisé -basketItems actualisé)
-    let deleteBtn = document.querySelectorAll('cart__item__content__setting__delete');
-      for (let i=0; i<deleteBtn.length;i++){
-      
-        for(i=0; i<deleteBtn.length; i++){
-           deleleBtn.addEventlistener("click", function (){       
-       for (i=0; i<deleteBtn.length; i++){
-       if( 
-          deleteBtn[i].style.display = "none"
-           )
-        {basketDelete = basketItems [i]
-          alert(1)
-        }
-        else(
-           basketDelete.splice([i,1])
-        )
-        } 
-        console.log(basketDelete)
-       }
-       )
-       
-      }
-      
-    }
-    
-  } 
+
+
     
  
 
@@ -145,4 +125,4 @@ deleteBasketItems()
        
                
        
-     */
+    
