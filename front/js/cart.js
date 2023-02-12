@@ -21,63 +21,74 @@ async function renderBasket(){
       cartItem.classList.add('cart__item')
       cartItem.setAttribute("data-id",product._id)
       cartItem.setAttribute("data-color",basketItems[i].color)
-    let cartItemImg = document.createElement('div')
-    cartItemImg.classList.add('div')
-    cartItem.appendChild(cartItemImg)
-    let img = document.createElement('img')
-    cartItemImg.appendChild(img)
-    cartItemImg.classList.add('cart__item__img')
-    img.src=product.imageUrl
-    img.alt=product.altTxt
-    let cartItemContent = document.createElement('div')
-    cartItem.appendChild(cartItemContent)
-    cartItemContent.classList.add('cart__item__content')
-    let cartItemContentDescription = document.createElement('div')
-    cartItemContent.appendChild(cartItemContentDescription)
-    cartItemContentDescription.classList.add('cart__item__content__description')
-    let h2 = document.createElement('h2')
-    cartItemContentDescription.appendChild(h2)
-    h2.innerHTML=product.name
 
-    let productColor = document.createElement('p')
-      cartItemContentDescription.appendChild(productColor)
-      productColor.innerHTML = product.colors[i] 
+    let cartItemImg = document.createElement('div')
+      cartItemImg.classList.add('div')
+      cartItem.appendChild(cartItemImg)
+
+    let img = document.createElement('img')
+      cartItemImg.appendChild(img)
+      cartItemImg.classList.add('cart__item__img')
+      img.src=product.imageUrl
+     img.alt=product.altTxt
+
+    let cartItemContent = document.createElement('div')
+      cartItem.appendChild(cartItemContent)
+      cartItemContent.classList.add('cart__item__content')
+
+    let cartItemContentDescription = document.createElement('div')
+      cartItemContent.appendChild(cartItemContentDescription)
+      cartItemContentDescription.classList.add('cart__item__content__description')
+
+    let h2 = document.createElement('h2');
+      cartItemContentDescription.appendChild(h2);
+      h2.innerHTML=product.name;
+
+    let productColor = document.createElement('p');
+      cartItemContentDescription.appendChild(productColor);
+      productColor.innerHTML = product.colors[i];
 
     let productPrice = document.createElement("p");
       productPrice.innerText = `Prix: ${product.price} €`;
       cartItemContentDescription.appendChild(productPrice)
 
     let cartItemContentSettings = document.createElement('div')
-    cartItemContentSettings.classList.add('cart__item__content__settings')
-    cartItemContent.appendChild(cartItemContentSettings)
+      cartItemContentSettings.classList.add('cart__item__content__settings')
+     cartItemContent.appendChild(cartItemContentSettings)
+
     let cartItemContentSettingsQuantity = document.createElement('div')
-    cartItemContentSettingsQuantity.classList.add('cart__item__content__settings__quantity')
-    cartItemContentSettings.appendChild(cartItemContentSettingsQuantity)
+      cartItemContentSettingsQuantity.classList.add('cart__item__content__settings__quantity')
+      cartItemContentSettings.appendChild(cartItemContentSettingsQuantity)
+
     let quantityProduct = document.createElement('p');
-    cartItemContentSettingsQuantity.appendChild(quantityProduct);
-    quantityProduct.innerHTML="Qté :";
+      cartItemContentSettingsQuantity.appendChild(quantityProduct);
+      quantityProduct.innerHTML="Qté :";
+    
     let inputProductQuantity = document.createElement('input')
-    cartItemContentSettingsQuantity.appendChild(inputProductQuantity)
-    inputProductQuantity.classList.add('itemQuantity')
-    inputProductQuantity.value=`${basketItems[i].quantity}`
-    inputProductQuantity.setAttribute("type","number");
-    inputProductQuantity.setAttribute("name","itemQuantity")
-    inputProductQuantity.setAttribute("min","1")
-    inputProductQuantity.setAttribute("max","100")   
+      cartItemContentSettingsQuantity.appendChild(inputProductQuantity)
+      inputProductQuantity.classList.add('itemQuantity')
+      inputProductQuantity.value=`${basketItems[i].quantity}`
+      
+      inputProductQuantity.setAttribute("type","number");
+      inputProductQuantity.setAttribute("name","itemQuantity")
+      inputProductQuantity.setAttribute("min","1")
+      inputProductQuantity.setAttribute("max","100")  
+
     let deleteProduct = document.createElement('div')
-    cartItemContentSettings.appendChild(deleteProduct)
-    deleteProduct.classList.add('cart__item__content__settings__delete')
+      cartItemContentSettings.appendChild(deleteProduct)
+      deleteProduct.classList.add('cart__item__content__settings__delete')
+
     let supprimer = document.createElement('p')
-    deleteProduct.appendChild(supprimer)
-    supprimer.classList.add('deleteItem')
-    supprimer.innerText="Supprimer"
+      deleteProduct.appendChild(supprimer)
+      supprimer.classList.add('deleteItem')
+      supprimer.innerText="Supprimer"
   }
   renderTotal()
   clickSupprimer()
   deleteBasketItems()
   deleteBasketQty()
   modifQtyItems()
-  suppQty0()
+  
 
 }
 renderBasket()
@@ -114,7 +125,6 @@ function clickSupprimer(){
     // mise à jour des items après changement
     deleteBasketQty(itemIdModif,itemColorModif,itemQtyModif)
     deleteBasketItems(itemIdModif,itemColorModif)
-    suppQty0(itemColorModif,itemIdModif,itemQtyModif)
     renderTotal();
   }
   )
@@ -157,21 +167,6 @@ function deleteBasketItems(id, color) {
   }
 }
 
-function suppQty0(quantity){
-for (let i=0; i < basketItems.length ;i++){
-   if (basketItems[i].id == id && basketItems[i].color== color){
-       if (basketItems[i].quantity ==quantity && basketItems[i].quantity.value == 0 ){
-         let zeroQty= []
-         zeroQty[i] = basketItems[i].splice(i, 1)
-         localStorage.setItem('Basketitems', JSON.stringify(basketItems))
-        break;
-        }
-      }
-    }
-}
-
-
-
 
 /*const noms = pieces.map(piece => piece.nom);
 for(let i = pieces.length -1 ; i >= 0; i--){
@@ -183,7 +178,7 @@ console.log(noms)
 */
 
 
-  function deleteBasketQty(id, color,quantity){
+  function deleteBasketQty(id, color, quantity){
     for (let i=0; i<basketItems.length; i++){
       if ( basketItems[i].id== id && basketItems[i].color == color){
         basketItems[i].quantity = quantity;
