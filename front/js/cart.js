@@ -68,7 +68,6 @@ async function renderBasket(){
       cartItemContentSettingsQuantity.appendChild(inputProductQuantity)
       inputProductQuantity.classList.add('itemQuantity')
       inputProductQuantity.value=`${basketItems[i].quantity}`
-      
       inputProductQuantity.setAttribute("type","number");
       inputProductQuantity.setAttribute("name","itemQuantity")
       inputProductQuantity.setAttribute("min","1")
@@ -83,20 +82,17 @@ async function renderBasket(){
       supprimer.classList.add('deleteItem')
       supprimer.innerText="Supprimer"
   }
-  renderTotal()
-  clickSupprimer()
-  deleteBasketItems()
-  deleteBasketQty()
-  modifQtyItems()
-  
+renderTotal()
+clickSupprimer()
+deleteBasketItems()
+deleteBasketQty()
+modifQtyItems()
 
 }
 renderBasket()
 
 //création d'une fonction qui ve mettre à jour le basketItem 
-//afin d'envoyer un panier actualisé dans la page confirmation
-
-
+//lorsque l'utilisateur va clicker sur le btn"supprimer"
 function clickSupprimer(){
   document.querySelectorAll('.deleteItem').forEach( function(button){
     button.addEventListener("click", function(event){
@@ -105,9 +101,8 @@ function clickSupprimer(){
      let itemId = itemDiv.dataset.id
      let itemColor = itemDiv.dataset.color
      console.log(itemId+""+itemColor)
-     deleteBasketItems(itemId,itemColor)
-     
-   })
+     deleteBasketItems(itemId,itemColor)  
+     })
    }
  )}
  //pour chaque changement sur la class .itemQuantity
@@ -120,19 +115,15 @@ function clickSupprimer(){
     let itemIdModif = itemModifItems.dataset.id
     let itemColorModif = itemModifItems.dataset.color
     let itemQtyModif = modifQtyItems.value
-    console.log (itemQtyModif)
-    console.log (itemIdModif +""+itemColorModif)
+      console.log (itemQtyModif)
+      console.log (itemIdModif +""+itemColorModif)
     // mise à jour des items après changement
     deleteBasketQty(itemIdModif,itemColorModif,itemQtyModif)
     deleteBasketItems(itemIdModif,itemColorModif)
     renderTotal();
-  }
-  )
+    } )
+  })
 }
-)
- }
-
-
 
 function getPrice(id) {
   for (let i=0; i < products.length ;i++){
@@ -162,45 +153,53 @@ function deleteBasketItems(id, color) {
       // on est sur le bon, on le vire
       basketItems = basketItems.splice(i, 1)
       localStorage.setItem('Basketitems', JSON.stringify(basketItems))
+      clickSupprimer()
       break;
      }
   }
 }
-
-
-/*const noms = pieces.map(piece => piece.nom);
-for(let i = pieces.length -1 ; i >= 0; i--){
-   if(pieces[i].prix > 35){
-       noms.splice(i,1)
-   }
-}
-console.log(noms)
-*/
-
-
-  function deleteBasketQty(id, color, quantity){
-    for (let i=0; i<basketItems.length; i++){
-      if ( basketItems[i].id== id && basketItems[i].color == color){
-        basketItems[i].quantity = quantity;
-        localStorage.setItem('Basketitems', JSON.stringify(basketItems));
-        deleteBasketItems(id,color)
-       }
-      }
+function deleteBasketQty(id, color, quantity){
+  for (let i=0; i<basketItems.length; i++){
+    if ( basketItems[i].id== id && basketItems[i].color == color){
+      basketItems[i].quantity = quantity;
+      localStorage.setItem('Basketitems', JSON.stringify(basketItems));
+      modifQtyItems()
+    
     }
-    
-    
-        
-  
- 
-   console.log(deleteBasketQty)
-  
- 
+  }
+}
+
+console.log(deleteBasketQty)
+let elts = document.querySelectorAll('.cart__item').forEach(div => {
+  if (div.dataset.id == id) {
+    div.parentNode.removeChild(div)
+    return
+    }
+})
+
+  /*console.log(deleteBasketItems)
   let elts = document.querySelectorAll('.cart__item').forEach(div => {
     if (div.dataset.id == id) {
       div.parentNode.removeChild(div)
       return
     }
-  })
-  
+  }) */
   // recalculer le total
-  renderTotal()
+  
+renderTotal()
+
+let cartOrder= document.getElementByClassName('cart__order');
+let cartOrderQuestion=document.getElementByClassName('cart__order__form__question')
+let fisrtNameQ = cartOrderQuestion.labels
+document.querySelector('.cart__order__form__question' ).addEventListener("change",function(){
+  var valid = true;
+  for(let input of document.querySelectorAll(".form input,.label for .id")){
+      valid &= input.reportValidity();
+      if(!valid){
+          break;
+      }
+  }
+  if(valid){
+      alert("Votre message a bien été envoyé.");
+  }
+});
