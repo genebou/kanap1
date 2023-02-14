@@ -189,77 +189,51 @@ let elts = document.querySelectorAll('.cart__item').forEach(div => {
 renderTotal()
 
     //recupèration des données du client
-function champsClients (){
- 
-    let champs =  document.querySelectorAll('cart__order__form__question')
-    fisrtName = champs.getElementById('firstName');
-    firstName.setAttribute("type=","text");
-   let fisrtNameError = document.getElementById('p');
-    fisrtNameError.id('fisrtNameErrorMsg')
-const lastName = document.getElementById('lastName');
-  lasteName.setAttribute("type=","text");
-  const lastNameError = document.getElementById('p');
-    lastNameError.id('lastNameErrorMsg')
-const address = document.getElementById('adress');
-  adress.setAttribute("type=","text");
-  const addressError = document.getElementById('p');
-    addressError.id('addressErrorMsg')
-const city = document.getElementById('city');
-  city.setAttribute("type=","text");
-  const cityError = document.getElementById('p');
-  cityError.id('cityErrorMsg');
+    //assignation de l'iD à un element du HTML
+  let firstName = document.getElementById('firstName');
+  let lateName =document.getElementById('lastName');
+  /*let fisrtNameError = document.getElementById('firstNameErrorMsg');
+  let lastNameError = document.getElementById('lastNameErrorMsg');*/
+  let address = document.getElementById('address');
+  /*const adsError = document.getElementById('adrressErrorMsg');*/
+  const city = document.getElementById('city');
+  /*const cityError = document.getElementById('cityErrorMsg');*/
+  const email = document.getElementById('email');
+  const validOrder = document.getElementById('order');
 
-const email = document.getElementById('email');
-  email.setAttribute("type=","email");
-  const emailError = document.getElementById('p');
-          emailError.id('emailErrorMsg')
-
-const validOrder = document.getElementById('order');
-  validOrder.setAttribute("type=","submit");
-        
-    
-console.log(champsClients);
-}      
-    
-    champsClients()
-
-validOrder.addEventListener('click',async(event)=>{
-    event.msgError(client)
-
-//condition
-const client ={
-  fisrtName : firstName, 
-  lastName : lastName,
-  adress : address, 
-  city : city,
-  email : email,
+  let productsId =[]
+  for (let i=0; i< basketItems.length; i++){
+    productsId.push(basketItems[i].id)
+     
+  }
+  const clientData ={
+    firstName : firstName.value, 
+    lastName : lastName.value,
+    address : address.value, 
+    city : city.value,
+    email : email.value,
+    products :productsId,
+  }  
+  async function submitOrder(){
+  const rawResponse = await fetch('http://localhost:8000/order', 
+    {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      }, 
+    body: JSON.stringify(clientData)
+    }
+    );
+  const content = await rawResponse.json();
+    console.log(content);
 }
-const eVide =
-  firstName.value === "" ||
-  lastName.value ===""||
-  address.value ===""||
-  city.value ===""||
-  email.value ==="";
+   
+submitOrder(clientData)
 
 
-if(eVide) {
-  alert ("renseigner vos coordonnées afin de passer la commande")
-  return;
-} 
-})
+
     
 
-/*
-document.querySelector('.cart__order__form__question' ).addEventListener("change",function(){
-  var valid = true;
-  for(let input of document.querySelectorAll(".form input,.label for .id")){
-      valid &= input.reportValidity();
-      if(!valid){
-          break;
-      }
-  }
-  if(valid){
-      alert("Votre message a bien été envoyé.");
-  }
-});
-*/
+
+
