@@ -187,7 +187,9 @@ let elts = document.querySelectorAll('.cart__item').forEach(div => {
   // recalculer le total
   
 renderTotal()
-
+// à faire function onClick
+function SubmitClick(){
+document.querySelectorAll('.cart__order__form__submit'). addEventListener("click", function(event){
     //recupèration des données du client
     //assignation de l'iD à un element du HTML
   let firstName = document.getElementById('firstName');
@@ -220,7 +222,7 @@ renderTotal()
     method: 'POST',
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
       }, 
     body: JSON.stringify(clientData)
     }
@@ -230,6 +232,8 @@ renderTotal()
 }
    
 submitOrder(clientData)
+})}
+console.log()
 
 
 
