@@ -14,7 +14,7 @@ async function renderBasket(){
     let product = await res.json()
     products.push(product)
     console.log(product)
-    //  création des Eléments HTML et CSS => il faut faire une fonction mais comment ?
+    //  création des Eléments HTML et CSS 
     let cartItem = document.createElement('article')
     // cartItem.innerHTML= product.colors[i]
       document.getElementById('cart__items').appendChild(cartItem)
@@ -97,7 +97,7 @@ function clickSupprimer(){
   document.querySelectorAll('.deleteItem').forEach( function(button){
     button.addEventListener("click", function(event){
      let deleteBtn = event.target
-     let itemDiv = deleteBtn.parentNode.parentNode.parentNode.parentNode
+     let itemDiv = deleteBtn.closest('article')
      let itemId = itemDiv.dataset.id
      let itemColor = itemDiv.dataset.color
      console.log(itemId+""+itemColor)
@@ -169,28 +169,87 @@ function deleteBasketQty(id, color, quantity){
   }
 }
 
-console.log(deleteBasketQty)
+/*console.log(deleteBasketQty)
 let elts = document.querySelectorAll('.cart__item').forEach(div => {
   if (div.dataset.id == id) {
     div.parentNode.removeChild(div)
     return
     }
-})
+})*/
 
-  /*console.log(deleteBasketItems)
+  console.log(deleteBasketItems)
   let elts = document.querySelectorAll('.cart__item').forEach(div => {
     if (div.dataset.id == id) {
       div.parentNode.removeChild(div)
       return
     }
-  }) */
+  }) 
   // recalculer le total
   
 renderTotal()
 
-let cartOrder= document.getElementByClassName('cart__order');
-let cartOrderQuestion=document.getElementByClassName('cart__order__form__question')
-let fisrtNameQ = cartOrderQuestion.labels
+    //recupèration des données du client
+function champsClients (){
+ 
+    let champs =  document.querySelectorAll('cart__order__form__question')
+    fisrtName = champs.getElementById('firstName');
+    firstName.setAttribute("type=","text");
+   let fisrtNameError = document.getElementById('p');
+    fisrtNameError.id('fisrtNameErrorMsg')
+const lastName = document.getElementById('lastName');
+  lasteName.setAttribute("type=","text");
+  const lastNameError = document.getElementById('p');
+    lastNameError.id('lastNameErrorMsg')
+const address = document.getElementById('adress');
+  adress.setAttribute("type=","text");
+  const addressError = document.getElementById('p');
+    addressError.id('addressErrorMsg')
+const city = document.getElementById('city');
+  city.setAttribute("type=","text");
+  const cityError = document.getElementById('p');
+  cityError.id('cityErrorMsg');
+
+const email = document.getElementById('email');
+  email.setAttribute("type=","email");
+  const emailError = document.getElementById('p');
+          emailError.id('emailErrorMsg')
+
+const validOrder = document.getElementById('order');
+  validOrder.setAttribute("type=","submit");
+        
+    
+console.log(champsClients);
+}      
+    
+    champsClients()
+
+validOrder.addEventListener('click',async(event)=>{
+    event.msgError(client)
+
+//condition
+const client ={
+  fisrtName : firstName, 
+  lastName : lastName,
+  adress : address, 
+  city : city,
+  email : email,
+}
+const eVide =
+  firstName.value === "" ||
+  lastName.value ===""||
+  address.value ===""||
+  city.value ===""||
+  email.value ==="";
+
+
+if(eVide) {
+  alert ("renseigner vos coordonnées afin de passer la commande")
+  return;
+} 
+})
+    
+
+/*
 document.querySelector('.cart__order__form__question' ).addEventListener("change",function(){
   var valid = true;
   for(let input of document.querySelectorAll(".form input,.label for .id")){
@@ -203,3 +262,4 @@ document.querySelector('.cart__order__form__question' ).addEventListener("change
       alert("Votre message a bien été envoyé.");
   }
 });
+*/
