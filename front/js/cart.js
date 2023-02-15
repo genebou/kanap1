@@ -189,20 +189,15 @@ let elts = document.querySelectorAll('.cart__item').forEach(div => {
 renderTotal()
 // à faire function onClick
 function SubmitClick(){
-document.querySelectorAll('.cart__order__form__submit'). addEventListener("click", function(event){
+document.querySelectorAll('.cart__order__form__submit'). addEventListener("click", function(submitOrder){
     //recupèration des données du client
     //assignation de l'iD à un element du HTML
   let firstName = document.getElementById('firstName');
-  let lateName =document.getElementById('lastName');
-  /*let fisrtNameError = document.getElementById('firstNameErrorMsg');
-  let lastNameError = document.getElementById('lastNameErrorMsg');*/
+  let lastName =document.getElementById('lastName');
   let address = document.getElementById('address');
-  /*const adsError = document.getElementById('adrressErrorMsg');*/
-  const city = document.getElementById('city');
-  /*const cityError = document.getElementById('cityErrorMsg');*/
+   const city = document.getElementById('city');
   const email = document.getElementById('email');
   const validOrder = document.getElementById('order');
-
   let productsId =[]
   for (let i=0; i< basketItems.length; i++){
     productsId.push(basketItems[i].id)
@@ -217,7 +212,7 @@ document.querySelectorAll('.cart__order__form__submit'). addEventListener("click
     products :productsId,
   }  
   async function submitOrder(){
-  const rawResponse = await fetch('http://localhost:8000/order', 
+  const rawResponse = await fetch('http://localhost:3000/api/products/order', 
     {
     method: 'POST',
     headers: {
@@ -232,8 +227,9 @@ document.querySelectorAll('.cart__order__form__submit'). addEventListener("click
 }
    
 submitOrder(clientData)
+SubmitClick(clientData)
 })}
-console.log()
+
 
 
 
