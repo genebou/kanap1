@@ -188,52 +188,58 @@ let elts = document.querySelectorAll('.cart__item').forEach(div => {
   
 renderTotal()
 // à faire function onClick
-function SubmitClick(){
-document.querySelectorAll('.cart__order__form__submit'). addEventListener("click", function(submitOrder){
-    //recupèration des données du client
-    //assignation de l'iD à un element du HTML
-  let firstName = document.getElementById('firstName');
-  let lastName =document.getElementById('lastName');
-  let address = document.getElementById('address');
-   const city = document.getElementById('city');
+function submitClick(){
+  console.log("submit click début")
+  //recupèration des données du client
+  //assignation de l'iD à un element du HTML
+  const firstName = document.getElementById('firstName');
+  const lastName = document.getElementById('lastName');
+  const address = document.getElementById('address');
+  const city = document.getElementById('city');
   const email = document.getElementById('email');
-  const validOrder = document.getElementById('order');
-  let productsId =[]
+  //console.log("name: "+firstName.value)
+
+  let productsId = []
+
   for (let i=0; i< basketItems.length; i++){
     productsId.push(basketItems[i].id)
-     
+    console.log("basketItems: "+basketItems[i].id)
   }
+
   const clientData ={
     firstName : firstName.value, 
-    lastName : lastName.value,
-    address : address.value, 
-    city : city.value,
-    email : email.value,
-    products :productsId,
+    lastName  : lastName.value,
+    address   : address.value, 
+    city      : city.value,
+    email     : email.value,
+    products  : productsId,
   }  
-  async function submitOrder(){
-  const rawResponse = await fetch('http://localhost:3000/api/products/order', 
-    {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-      }, 
-    body: JSON.stringify(clientData)
-    }
-    );
-  const content = await rawResponse.json();
-    console.log(content);
-}
-   
-submitOrder(clientData)
-SubmitClick(clientData)
-})}
+  //console.log("clientData: "+clientData)
+  //console.log("clientData firstName: "+clientData.firstName)
 
-
-
-
+  async function submitOrder(clientData){
+    console.log("submitOrder début")
+    // Envoi des données du client au serveur
+    const rawResponse = await fetch('localhost:3000/api/products/order', { // await fetch permet d'attendre la réponse du serveur
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(clientData)
+    });
     
-
-
-
+    // Récupération de la réponse du serveur
+    const content = await rawResponse.json(); // rawResponse est la réponse du serveur
+    console.log("json content: "+content)
+    //return content <-- SUR INTERNET, content est retourné 
+  }
+  submitOrder(clientData)
+  console.log("submitOrder fin")
+  /*
+  submitOrder().then(users => { // <-- SUR INTERNET, submitOrder est appelé de la manière suivante (users ici est une variable d'internet)
+  users;
+  });
+  */ 
+}
+document.getElementById('order').addEventListener("click", submitClick)
