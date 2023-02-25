@@ -202,10 +202,9 @@ function deleteBasketQty(id, color, quantity){
   // recalculer le total
   
 renderTotal()
-// function qui récupère les données du client
-function submitClick(){
-  console.log("submit click début")
-  //recupèration des données du client
+// function qui initialise les données du client au click sur le bouton "commander"
+function initClick(){
+  console.log("initClick début")
   //assignation de l'iD à un element du HTML
   const firstName = document.getElementById('firstName');
   const lastName = document.getElementById('lastName');
@@ -213,67 +212,75 @@ function submitClick(){
   const city = document.getElementById('city');
   const email = document.getElementById('email');
   console.log("name: "+firstName.value)
-
+  //création d'un tableau qui va contenir les id des produits du basketItems
   let productsId = []
-
   for (let i=0; i< basketItems.length; i++){
     productsId.push(basketItems[i].id)
     console.log("basketItems: "+basketItems[i].id)
   }
-
-  const client ={
-    firstName : firstName.value, 
+  //création d'un objet qui va contenir les données du client
+  const client = {
+    firstName : firstName.value,
     lastName  : lastName.value,
-    address   : address.value, 
+    address   : address.value,
     city      : city.value,
     email     : email.value,
-    products  : productsId,
-  }  
-
+    products : productsId,
+  }
+  //transformation de l'objet en string
   const clientData = JSON.stringify(client);
   console.log("clientData: "+clientData)
-  //console.log("clientData firstName: "+clientData.firstName)
+  //si le formulaire est vide, on affiche un message d'erreur et on bloque l'envoi des données
+  if (firstName.value == "" || lastName.value == "" || address.value == "" || city.value == "" || email.value == ""){
+    alert("Veuillez remplir le formulaire")
+    console.log("formulaire vide")
+    return
   
-//function qui envoie les données du client au serveur
-  async function submitOrder(clientData){
+  }
+  //sinon on envoie les données du client au serveur
+   else {submitOrder().then (clientData =>{
+    clientData;
+ })
+     // Envoi des données du client au serveur
+     alert(1)
+     console.log("envoi données au serveur")
+     alert(2)
+    async function submitOrder(){
+      alert(3)
     console.log("submitOrder début")
-    // Envoi des données du client au serveur
-    //function qui envoie les données du client au serveur 
-    let res = await fetch('http://localhost:3000/api/products/order', { // await fetch permet d'attendre la réponse du serveur
-        method: 'POST',
+    let res = await fetch("http://localhost:3000/api/products/order", {
+      method: "POST",
       headers: {
-        //'Accept': 'application/json',
+        'Accept': 'application/json',
+
         'Content-Type': 'application/json'
       },
-     
       body: clientData,
-        }).then((response)=>{
-          return response.json()
-        })
-        .then ((response)=>{
-          console.log("response.orderId");
-           
-          //window.location.href="./confirmation.html?orderId=" +response.orderId;
-  
-          
-      
+    })
+    alert(4)
+    //récupération de la réponse du serveur
+    const orderId= await res.json()
+    console.log("confirm: "+confirm)
+    //récupération de l'id de la commande
+    //récupération de l'id de la commande window.location.replace("./confirmation.html?orderId=" +confirm.orderId); 
+    window.location.replace("./confirmation.html?orderId=" +orderId);   
+     localStorage.clear();
+   console.log("json content: "+ res)
+    return res;
    
-   localStorage.clear();
-   console.log("json content: "+ response)
     //return content <-- SUR INTERNET, content est retourné 
-  })
-}
-  submitOrder().then (clientData =>{
-    clientData;
-})
+  }
 
-
-  console.log("submitOrder fin")
   
-  /*
-  submitOrder().then(users => { // <-- SUR INTERNET, submitOrder est appelé de la manière suivante (users ici est une variable d'internet)
-  users;
-  });
-  */ 
+ 
+} 
+
+//submitOrder().
+//
+
+
+console.log("submitOrder fin3")
 }
-document.getElementById('order').addEventListener("click", submitClick)
+
+//initialisation de la fonction initClick au click sur le bouton "commander"
+ document.getElementById('order').addEventListener("click", initClick)
