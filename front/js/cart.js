@@ -133,24 +133,7 @@ function deleteBasketItems(id, color) {
   }
 }
 
-/*function initSupprimer(){
-  document.querySelectorAll('.deleteItem').forEach( function(button){
-    button.addEventListener("click", function(event){
-      console.log('suppimer ?')
-     let deleteBtn = event.target
 
-     let itemDiv = deleteBtn.closest('article')
-     console.log(itemDiv)
-     let itemId = itemDiv.dataset.id
-     console.log(itemId)
-     let itemColor = itemDiv.dataset.color
-     console.log(itemId+""+itemColor)
-     deleteBasketItems(itemId,itemColor)
-     renderTotal(); 
-     })
-   }
- )}*/
- 
  //pour chaque changement sur la class .itemQuantity
  function initQtyItems(){
  document.querySelectorAll('.itemQuantity').forEach ((modification)=>{
@@ -248,7 +231,7 @@ function submitClick(){
   }  
 
   const clientData = JSON.stringify(client);
-  //console.log("clientData: "+clientData)
+  console.log("clientData: "+clientData)
   //console.log("clientData firstName: "+clientData.firstName)
   
 //function qui envoie les données du client au serveur
@@ -256,7 +239,7 @@ function submitClick(){
     console.log("submitOrder début")
     // Envoi des données du client au serveur
     //function qui envoie les données du client au serveur 
-    let res = await fetch('http://localhost:3000/api/products/order/', { // await fetch permet d'attendre la réponse du serveur
+    let res = await fetch('http://localhost:3000/api/products/order', { // await fetch permet d'attendre la réponse du serveur
         method: 'POST',
       headers: {
         //'Accept': 'application/json',
@@ -270,16 +253,21 @@ function submitClick(){
         .then ((response)=>{
           console.log("response.orderId");
            
-          window.location.href="./confirmation.html?orderId=" +response.orderId;
-  })
+          //window.location.href="./confirmation.html?orderId=" +response.orderId;
+  
           
       
    
    localStorage.clear();
    console.log("json content: "+ response)
     //return content <-- SUR INTERNET, content est retourné 
+  })
 }
-  submitOrder(clientData)
+  submitOrder().then (clientData =>{
+    clientData;
+})
+
+
   console.log("submitOrder fin")
   
   /*
