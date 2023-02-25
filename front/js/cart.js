@@ -83,30 +83,76 @@ async function renderBasket(){
       supprimer.innerText="Supprimer"
   }
 renderTotal()
-clickSupprimer()
-deleteBasketItems()
-deleteBasketQty()
-modifQtyItems()
+initSupprimer()
+
+initQtyItems()
 
 }
 renderBasket()
+//création d'une fonction qui trie les produits par id
+function sortBasketItems(){
+  basketItems.sort(function(a,b){
+    if (a.id > b.id){
+      return 1
+    }
+    if (a.id < b.id){
+      return -1
+    }
+    return 0
+  })
+}
+sortBasketItems()
 
-//création d'une fonction qui ve mettre à jour le basketItem 
-//lorsque l'utilisateur va clicker sur le btn"supprimer"
-function clickSupprimer(){
+//création d'une fonction qui va initier le bouton supprimer
+function initSupprimer(){
   document.querySelectorAll('.deleteItem').forEach( function(button){
     button.addEventListener("click", function(event){
+      console.log('suppimer ?')
+      let deleteBtn = event.target
+      let itemDiv = deleteBtn.closest('article')
+      console.log(itemDiv)
+      let itemId = itemDiv.dataset.id
+      console.log(itemId)
+      let itemColor = itemDiv.dataset.color
+      console.log(itemId+""+itemColor)
+      deleteBasketItems(itemId,itemColor)
+      renderTotal();
+    })
+  })
+}
+//création d'une fonction qui ve mettre à jour le basketItem en supprimant l'item
+//lorsque l'utilisateur va clicker sur le btn"supprimer" 
+function deleteBasketItems(id, color) {
+  for (let i=0; i < basketItems.length ;i++){
+    if (basketItems[i].id == id && basketItems[i].color == color) {
+      basketItems.splice(i,1)
+      window.localStorage.setItem('Basketitems', JSON.stringify(basketItems))
+      document.querySelector(`[data-id="${id}"][data-color="${color}"]`).remove()
+      return
+    }
+  }
+}
+
+/*function initSupprimer(){
+  document.querySelectorAll('.deleteItem').forEach( function(button){
+    button.addEventListener("click", function(event){
+      console.log('suppimer ?')
      let deleteBtn = event.target
+
      let itemDiv = deleteBtn.closest('article')
+     console.log(itemDiv)
      let itemId = itemDiv.dataset.id
+     console.log(itemId)
      let itemColor = itemDiv.dataset.color
      console.log(itemId+""+itemColor)
-     deleteBasketItems(itemId,itemColor)  
+     deleteBasketItems(itemId,itemColor)
+     renderTotal(); 
      })
    }
- )}
+ )}*/
+ 
  //pour chaque changement sur la class .itemQuantity
- function modifQtyItems(){
+ function initQtyItems(){
  document.querySelectorAll('.itemQuantity').forEach ((modification)=>{
   modification.addEventListener('change',function(event){
     //Modification des items suite changement attention variables locales
@@ -119,8 +165,7 @@ function clickSupprimer(){
       console.log (itemIdModif +""+itemColorModif)
     // mise à jour des items après changement
     deleteBasketQty(itemIdModif,itemColorModif,itemQtyModif)
-    deleteBasketItems(itemIdModif,itemColorModif)
-    renderTotal();
+      renderTotal();
     } )
   })
 }
@@ -147,35 +192,22 @@ function renderTotal() {
   document.getElementById('totalQuantity').innerHTML = qty
 }
 
-function deleteBasketItems(id, color) {
-  for (let i=0; i < basketItems.length ;i++){
-    if (basketItems[i].id == id && basketItems[i].color== color) {
-      // on est sur le bon, on le vire
-      basketItems = basketItems.splice(i, 1)
-      localStorage.setItem('Basketitems', JSON.stringify(basketItems))
-      clickSupprimer()
-      break;
-     }
-  }
-}
+
+
+
+//function qui met à jour la quantité et qui supprime l'item si la quantité est à 0
 function deleteBasketQty(id, color, quantity){
   for (let i=0; i<basketItems.length; i++){
     if ( basketItems[i].id== id && basketItems[i].color == color){
       basketItems[i].quantity = quantity;
       localStorage.setItem('Basketitems', JSON.stringify(basketItems));
-      modifQtyItems()
-    
+      initQtyItems()
+      if (basketItems[i].quantity == 0){
+        deleteBasketItems(id, color)
+      }
     }
   }
 }
-
-/*console.log(deleteBasketQty)
-let elts = document.querySelectorAll('.cart__item').forEach(div => {
-  if (div.dataset.id == id) {
-    div.parentNode.removeChild(div)
-    return
-    }
-})*/
 
   console.log(deleteBasketItems)
   let elts = document.querySelectorAll('.cart__item').forEach(div => {
@@ -187,7 +219,7 @@ let elts = document.querySelectorAll('.cart__item').forEach(div => {
   // recalculer le total
   
 renderTotal()
-// à faire function onClick
+// function qui récupère les données du client
 function submitClick(){
   console.log("submit click début")
   //recupèration des données du client
@@ -197,7 +229,7 @@ function submitClick(){
   const address = document.getElementById('address');
   const city = document.getElementById('city');
   const email = document.getElementById('email');
-  //console.log("name: "+firstName.value)
+  console.log("name: "+firstName.value)
 
   let productsId = []
 
@@ -206,7 +238,7 @@ function submitClick(){
     console.log("basketItems: "+basketItems[i].id)
   }
 
-  const clientData ={
+  const client ={
     firstName : firstName.value, 
     lastName  : lastName.value,
     address   : address.value, 
@@ -214,28 +246,42 @@ function submitClick(){
     email     : email.value,
     products  : productsId,
   }  
+
+  const clientData = JSON.stringify(client);
   //console.log("clientData: "+clientData)
   //console.log("clientData firstName: "+clientData.firstName)
-
+  
+//function qui envoie les données du client au serveur
   async function submitOrder(clientData){
     console.log("submitOrder début")
     // Envoi des données du client au serveur
-    const rawResponse = await fetch('localhost:3000/api/products/order', { // await fetch permet d'attendre la réponse du serveur
-      method: 'POST',
+    //function qui envoie les données du client au serveur 
+    let res = await fetch('http://localhost:3000/api/products/order/', { // await fetch permet d'attendre la réponse du serveur
+        method: 'POST',
       headers: {
-        'Accept': 'application/json',
+        //'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(clientData)
-    });
-    
-    // Récupération de la réponse du serveur
-    const content = await rawResponse.json(); // rawResponse est la réponse du serveur
-    console.log("json content: "+content)
+     
+      body: clientData,
+        }).then((response)=>{
+          return response.json()
+        })
+        .then ((response)=>{
+          console.log("response.orderId");
+           
+          window.location.href="./confirmation.html?orderId=" +response.orderId;
+  })
+          
+      
+   
+   localStorage.clear();
+   console.log("json content: "+ response)
     //return content <-- SUR INTERNET, content est retourné 
-  }
+}
   submitOrder(clientData)
   console.log("submitOrder fin")
+  
   /*
   submitOrder().then(users => { // <-- SUR INTERNET, submitOrder est appelé de la manière suivante (users ici est une variable d'internet)
   users;
