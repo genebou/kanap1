@@ -1,6 +1,6 @@
 //récupération des données du client du serveur et affichage de l'orderId dans le HTML 
 
-const reponse =await fetch ('http://localhost:3000/api/products/_id', {
+const reponse =await fetch ('http://localhost:3000/api/products/order', {
     method: "get",
     headers: {
         "content-Type": "application/json",

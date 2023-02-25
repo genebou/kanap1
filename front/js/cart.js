@@ -7,7 +7,7 @@ if (basketItems === null){
 else{
   basketItems=JSON.parse(basketItems)
 }
-//récupération du localStorage et des Id sur l'API function => renderBasket
+//  affichage des canapés dans le panier
 async function renderBasket(){
   for( let i = 0 ; i < basketItems.length; i++ ){
     let res  = await fetch('http://localhost:3000/api/products/'+ basketItems[i].id)    
@@ -89,6 +89,7 @@ initQtyItems()
 
 }
 renderBasket()
+
 //création d'une fonction qui trie les produits par id
 function sortBasketItems(){
   basketItems.sort(function(a,b){
@@ -120,8 +121,8 @@ function initSupprimer(){
     })
   })
 }
-//création d'une fonction qui ve mettre à jour le basketItem en supprimant l'item
-//lorsque l'utilisateur va clicker sur le btn"supprimer" 
+
+//lorsque l'utilisateur va clicker sur le btn"supprimer"  on va supprimer l'item du localStorage
 function deleteBasketItems(id, color) {
   for (let i=0; i < basketItems.length ;i++){
     if (basketItems[i].id == id && basketItems[i].color == color) {
@@ -133,8 +134,9 @@ function deleteBasketItems(id, color) {
   }
 }
 
-
- //pour chaque changement sur la class .itemQuantity
+//création d'une fonction qui va initier le bouton supprimer
+// en modifiant la quantité dès qu'il y a un changement
+ 
  function initQtyItems(){
  document.querySelectorAll('.itemQuantity').forEach ((modification)=>{
   modification.addEventListener('change',function(event){
@@ -152,7 +154,7 @@ function deleteBasketItems(id, color) {
     } )
   })
 }
-
+//function price d'un item
 function getPrice(id) {
   for (let i=0; i < products.length ;i++){
     if (products[i]._id == id) {
@@ -162,7 +164,7 @@ function getPrice(id) {
   }
   return 0
 }
-
+//function qui calcule le total
 function renderTotal() {
   let total = 0;
   let qty = 0
@@ -174,11 +176,7 @@ function renderTotal() {
   document.getElementById('totalPrice').innerHTML = total
   document.getElementById('totalQuantity').innerHTML = qty
 }
-
-
-
-
-//function qui met à jour la quantité et qui supprime l'item si la quantité est à 0
+//function qui met à jour la quantité d'un item dans le localStorage
 function deleteBasketQty(id, color, quantity){
   for (let i=0; i<basketItems.length; i++){
     if ( basketItems[i].id== id && basketItems[i].color == color){
@@ -191,7 +189,7 @@ function deleteBasketQty(id, color, quantity){
     }
   }
 }
-
+//function qui supprime l'item du panier
   console.log(deleteBasketItems)
   let elts = document.querySelectorAll('.cart__item').forEach(div => {
     if (div.dataset.id == id) {
@@ -199,8 +197,7 @@ function deleteBasketQty(id, color, quantity){
       return
     }
   }) 
-  // recalculer le total
-  
+ //recalculer le total
 renderTotal()
 // function qui initialise les données du client au click sur le bouton "commander"
 function initClick(){
@@ -219,7 +216,7 @@ function initClick(){
     console.log("basketItems: "+basketItems[i].id)
   }
   //création d'un objet qui va contenir les données du client
-  const client = {
+  const contactClient = {
     firstName : firstName.value,
     lastName  : lastName.value,
     address   : address.value,
@@ -228,9 +225,21 @@ function initClick(){
     products : productsId,
   }
   //transformation de l'objet en string
-  const clientData = JSON.stringify(client);
-  console.log("clientData: "+clientData)
-  //si le formulaire est vide, on affiche un message d'erreur et on bloque l'envoi des données
+   const clientData = JSON.stringify(contactClient);
+   console.log("clientData: "+clientData)
+  //reggex pour vérifier que firstName et lastName n'ont pas de chiffres
+  const regexfirstName = /^[a-zA-Z]+$/;
+  const regexlastName = /^[a-zA-Z]+$/;
+   
+  //si le nom ou le prénom ne respecte pas la reggex, on affiche un message d'erreur et on bloque l'envoi des données
+  if (!regexfirstName.test(firstName.value) || !regexlastName.test(lastName.value)){
+    alert("Veuillez entrer un nom et un prénom valide") 
+    console.log("nom ou prénom non valide")
+    return
+  }
+ 
+  //si le formulaire est vide,on affiche un message d'erreur et on bloque l'envoi des données
+  
   if (firstName.value == "" || lastName.value == "" || address.value == "" || city.value == "" || email.value == ""){
     alert("Veuillez remplir le formulaire")
     console.log("formulaire vide")
@@ -238,49 +247,50 @@ function initClick(){
   
   }
   //sinon on envoie les données du client au serveur
-   else {submitOrder().then (clientData =>{
-    clientData;
- })
-     // Envoi des données du client au serveur
-     alert(1)
-     console.log("envoi données au serveur")
-     alert(2)
-    async function submitOrder(){
+   else {submitOrder(clientData)
+ }
+     
+async function submitOrder(){
       alert(3)
-    console.log("submitOrder début")
+  console.log("submitOrder début")
     let res = await fetch("http://localhost:3000/api/products/order", {
       method: "POST",
       headers: {
-        'Accept': 'application/json',
+        'Accept':'application/json',
 
-        'Content-Type': 'application/json'
+        'Content-Type':'application/json'
       },
       body: clientData,
     })
+    .then(response => response.json)
+  .catch(err => console.log(err));
     alert(4)
-    //récupération de la réponse du serveur
-    const orderId= await res.json()
-    console.log("confirm: "+confirm)
-    //récupération de l'id de la commande
-    //récupération de l'id de la commande window.location.replace("./confirmation.html?orderId=" +confirm.orderId); 
-    window.location.replace("./confirmation.html?orderId=" +orderId);   
-     localStorage.clear();
-   console.log("json content: "+ res)
-    return res;
-   
-    //return content <-- SUR INTERNET, content est retourné 
-  }
-
-  
- 
+    //récupération de la réponse du serveur quand la commande est confirmée
+    const orderId = res.orderId
+    console.log("orderId: "+orderId)
+            
+   //création d'un objet qui va contenir les données du client et l'id de la commande
+    const order = {
+      contact : contactClient,
+      orderId : orderId,
+    }
+      //envoi contactClient et orderId    vers confirmation.html
+      window.location.replace("./confirmation.html?orderId=" +orderId);
+      //vider le localStorage
+      localStorage.clear()
+      //recupération de l'id de la commande
+      const numeroCommande = new URLSearchParams(window.location.search).get("orderId")
+      console.log("orderId: "+numeroCommande)
+      //affichage de l'id de la commande
+      document.getElementById('orderId').innerHTML = orderId
+      
+      
+    }
 } 
-
-//submitOrder().
-//
 
 
 console.log("submitOrder fin3")
-}
+
 
 //initialisation de la fonction initClick au click sur le bouton "commander"
  document.getElementById('order').addEventListener("click", initClick)
