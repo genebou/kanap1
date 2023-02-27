@@ -1,7 +1,11 @@
+// Récupération des données de l'API
 fetch("http://localhost:3000/api/products")
+// Récupération des données au format JSON
 .then((res) => res.json())
+// Affichage des données dans la console
 .then((data) => {
-    console.log(data)
+        console.log(data)
+        // Boucle pour afficher les données
     for  (let i = 0 ; i < data.length; i++) {
         // mise en place html <a>
         let a = document.createElement('a')
@@ -21,7 +25,6 @@ fetch("http://localhost:3000/api/products")
         let p = document.createElement('p')
         p.innerHTML = data[i].description
         article.appendChild(p)
-        
         document.getElementById('items').appendChild(a)
     }
    
