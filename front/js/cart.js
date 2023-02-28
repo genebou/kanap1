@@ -304,11 +304,13 @@ order.addEventListener('click', async (event) =>{
   //création d'un objet qui va contenir les données du client et les id des produits du panier 
   //pour envoi de cet objet au serveur
     const formData ={
+      contact:{
       firstName: firstName.value,
       lastName: lastName.value,
       address: address.value,
       city : city.value,
-      email: email.value,
+      email: email.value
+      },
       products : productsId,
   } 
     
@@ -349,7 +351,7 @@ order.addEventListener('click', async (event) =>{
         body: clientData, 
       });
       const confirm = await res.json();
-      console.log("confirm: "+confirm);
+      console.log (confirm);
       //on récupère l'id de la commande et on l'envoie à la page de confirmation
       window.location.href= " ./confirmation.html?orderId=" +confirm.orderId;      //on vide le localStorage
       localStorage.clear();

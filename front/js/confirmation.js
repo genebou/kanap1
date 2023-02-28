@@ -18,11 +18,11 @@ function getParams(url = window.location) {
 let p = document.createElement('p');
 p.setAttribute('orderId', getParams().orderId);
 orderId.innerHTML = getParams().orderId;
-let confirmation= document.getElementByClassName('confirmation').appenchild(p);
+
 
 
 //affichage de l'orderId dans la page confirmation  
-orderId.innerHTML = getParams().orderId;
+//orderId.innerHTML = getParams().orderId;
 
 
 
