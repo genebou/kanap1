@@ -1,59 +1,22 @@
-//récupération des données du client du serveur et affichage de l'orderId dans le HTML 
+//récupération orderId dans l'url
+function getParams(url = window.location) {
+    // Création d'un objet vide
+    let params = {};
+    // Création d'un objet URL à partir de l'url de la page 
+    // (window.location est l'url de la page courante)
+    // (new URL(url) est un objet qui permet de manipuler l'url)
+    // (new URL(url).searchParams.forEach est une méthode qui permet de parcourir les paramètres de l'url)
+        new URL(url).searchParams.forEach(function (val, key) {
+            // Ajout des paramètres de l'URL dans l'objet params
+        params[key] = val;
+    });
+    // Retour de l'objet params
+    return params;
+}
+//let orderId = getParams().orderId
+ //let orderId= document.getElementById('orderId')  
 
-const reponse =await fetch ('http://localhost:3000/api/products/order', {
-    method: "get",
-    headers: {
-        "content-Type": "application/json",
-        "Accept":"application/json"
-    },
-    // définir le body de la requête
-    // définir clientData comme étant un objet JSON
-    
-     body: JSON.stringify()
-    
-    
-})
-    
-.then((res) => res.json())
-.then((data) => {
-    let orderId = document.getElementById('orderId');
-let orderIdValue = window.location.search.split("?orderId=").join("");
-console.log(orderIdValue);
-console.log(orderId);
-orderId.innerHTML = data.orderId;
+   
+   
 
 
-console.log(orderId);
-})
-
-        /*let orderId= document.getElementById("orderId");
-        orderId.innerHTML = data.orderId;
-        console.log(hello)
-        console.log(data)
-    })
-    .catch((err)=>{
-        alert("commande non valide");
-    })
-    
-
-/*fetch ('http://localhost:3000/api/products/order',{
-    method : "post",
-    headers: {
-        "content-Type": "application/json",
-        "Accept":"application/json"
-    },
-    body: JSON.stringify(clientData)
-})
-.then((res) => res.json())
-.then((data) => {
-        let orderId= document.getElementById("orderId");
-        orderId.innerHTML = data.orderId;
-        console.log(orderId)
-        console.log(data)
-    })
-    .catch((err)=>{
-        alert("commande non valide");
-    })
-    
-    
-*/

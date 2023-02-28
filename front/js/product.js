@@ -1,4 +1,4 @@
-//création de la fonction getParams pour récupérer l'id du produit dans l'url  (note à moi-même: à revoir)  
+//création de la fonction getParams pour récupérer l'id du produit dans l'url   
 function getParams(url = window.location) {
     // Création d'un objet vide
     let params = {};

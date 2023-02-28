@@ -336,12 +336,14 @@ function initClick(){
   
   }
   //sinon on envoie les données du client au serveur
-   else {sendOrder(firstName)
+   else {sendOrder()
  }
 
  
   async function sendOrder(){
   alert ("entrée dans sendOrder")
+  console.log("sendOrder")
+
   //on récupère les données du client et les id des produits du panier  pour les envoyer au serveur
   
   //envoi des données du client et des id des produits du panier au serveur 
@@ -368,8 +370,21 @@ function initClick(){
              
     }),
     */
-    window.location.href= "./confirmation.html?orderId=" +111111;
+   alert(8)
+   //création d'une variable qui va contenir l'id de la commande
+  var confirm = "123456";
+  
+   alert (9)
+   //redirect vers la page de confirmation de commande en ajoutant l'id de la commande à l'url
+  window.location.href = "./confirmation.html?orderId=" + confirm.orderId;
+  console.log("window.location.href: "+window.location.href)
+    
+    
+   // window.location.href = "./confirmation.html?orderId=" + confirm.orderId;
+    
+ alert(10)
      localStorage.clear();
+     alert (11)
 
 }
 }
