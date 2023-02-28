@@ -280,11 +280,11 @@ function renderTotal() {
 renderTotal()
 
 //FORMULAIRE
+const order = document.getElementById('order');
+// on ajoute un écouteur d'événement au click sur le bouton "commander"
+order.addEventListener('click', async (event) =>{
+  event.preventDefault();
 
-// function qui initialise les données du client au click sur le bouton "commander"
-function initClick(){
-   console.log("initClick début")
-   // on récupère le bouton "commander" 
   //assignation de l'iD à un element du HTML 
   const firstName = document.getElementById('firstName');
   const lastName = document.getElementById('lastName');
@@ -296,32 +296,28 @@ function initClick(){
   // et qui va être envoyé au serveur dans la fonction sendOrder
   let productsId = []
   //on parcourt le tableau basketItems pour récupérer les id des produits
-  for (let i=0; i< basketItems.length; i++){
+    for (let i=0; i< basketItems.length; i++){
     //on ajoute les id des produits dans le tableau productsId
-    productsId.push(basketItems[i].id)
-    console.log("basketItems: "+basketItems[i].id)
-  }
+       productsId.push(basketItems[i].id)
+      console.log("basketItems: "+basketItems[i].id)
+    }
   //création d'un objet qui va contenir les données du client et les id des produits du panier 
   //pour envoi de cet objet au serveur
-  const formData ={
+    const formData ={
+      firstName: firstName.value,
+      lastName: lastName.value,
+      address: address.value,
+      city : city.value,
+      email: email.value,
+      products : productsId,
+  } 
     
-    firstName : firstName.value,
-    lastName  : lastName.value,
-    address   : address.value,
-    city      : city.value,
-    email     : email.value,
-    
-    products : productsId,
-  }
-  //transformation de l'objet en string
-   let clientData = JSON.stringify(formData);
-   console.log("clientData: "+clientData)
-  //reggex pour vérifier que firstName et lastName n'ont pas de chiffres
-  const regexfirstName = /^[a-zA-Z]+$/;
-  const regexlastName = /^[a-zA-Z]+$/;
+    //reggex pour vérifier que firstName et lastName n'ont pas de chiffres
+    const regexfirstName = /^[a-zA-Z]+$/;
+    const regexlastName = /^[a-zA-Z]+$/;
    
   //si le nom ou le prénom ne respecte pas la reggex, on affiche un message d'erreur et on bloque l'envoi des données
-  if (!regexfirstName.test(firstName.value) || !regexlastName.test(lastName.value)){
+   if (!regexfirstName.test(firstName.value) || !regexlastName.test(lastName.value)){
     alert("Veuillez entrer un nom et un prénom valide") 
     console.log("nom ou prénom non valide")
     return
@@ -333,65 +329,36 @@ function initClick(){
     alert("Veuillez remplir le formulaire")
     console.log("formulaire vide")
     return
-  
   }
   //sinon on envoie les données du client au serveur
-   else {sendOrder()
- }
+   else {
+    //transformation de l'objet en string
+    const products =  basketItems.map((order)=>order.Id)
+    console.log("products: "+products)
+    let clientData = JSON.stringify(formData);
+    console.log("clientData: "+clientData);
+    try{ 
+      const res = await fetch("http://localhost:3000/api/products/order", {
+        //création d'une requête POST
+        method: 'POST',
+        //on précise que l'on envoie des données au format JSON
+        headers: {
+          'Accept':'application/json',
+          'Content-Type':'application/json'
+        },
+        body: clientData, 
+      });
+      const confirm = await res.json();
+      console.log("confirm: "+confirm);
+      //on récupère l'id de la commande et on l'envoie à la page de confirmation
+      window.location.href= " ./confirmation.html?orderId=" +confirm.orderId;      //on vide le localStorage
+      localStorage.clear();
+    }catch(error){
+      console.log(error);
+        }
+    }
+  });
 
  
-  async function sendOrder(){
-  alert ("entrée dans sendOrder")
-  console.log("sendOrder")
-
-  //on récupère les données du client et les id des produits du panier  pour les envoyer au serveur
-  
-  //envoi des données du client et des id des produits du panier au serveur 
-  /* let res = await fetch("http://localhost:3000/api/products/order", {
-    //création d'une requête POST
-    method: 'POST',
-    //on précise que l'on envoie des données au format JSON
-    headers: {
-      'Accept':'application/json',
-      'Content-Type':'application/json'
-    },
-    body: clientData
-    })
-  alert (body)
-  //on récupère la réponse du serveur et on la transforme en objet JSON
-    .then ((res) => res.json)
-    return res.json()
-    //on récupère l'objet JSON et on affiche son contenu dans la console
-     
-    .then ((content) => { 
-       res.json()
-       console.log("content: "+content)
-       return content
-             
-    }),
-    */
-   alert(8)
-   //création d'une variable qui va contenir l'id de la commande
-  var confirm = "123456";
-  
-   alert (9)
-   //redirect vers la page de confirmation de commande en ajoutant l'id de la commande à l'url
-  window.location.href = "./confirmation.html?orderId=" + confirm.orderId;
-  console.log("window.location.href: "+window.location.href)
-    
-    
-   // window.location.href = "./confirmation.html?orderId=" + confirm.orderId;
-    
- alert(10)
-     localStorage.clear();
-     alert (11)
-
-}
-}
-
-//content 123456
-
-
-document.getElementById('order').addEventListener("click", initClick);
 
   

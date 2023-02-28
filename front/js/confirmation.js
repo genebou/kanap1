@@ -13,8 +13,19 @@ function getParams(url = window.location) {
     // Retour de l'objet params
     return params;
 }
-//let orderId = getParams().orderId
- //let orderId= document.getElementById('orderId')  
+
+
+let p = document.createElement('p');
+p.setAttribute('orderId', getParams().orderId);
+orderId.innerHTML = getParams().orderId;
+let confirmation= document.getElementByClassName('confirmation').appenchild(p);
+
+
+//affichage de l'orderId dans la page confirmation  
+orderId.innerHTML = getParams().orderId;
+
+
+
 
    
    
