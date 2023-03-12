@@ -353,9 +353,17 @@ order.addEventListener('click', async (event) =>{
       });
       const confirm = await res.json();
       console.log (confirm);
-      //on récupère l'id de la commande et on l'envoie à la page de confirmation
-      window.location.href= " ./confirmation.html?orderId=" +confirm.orderId;      //on vide le localStorage
+      //on récupère l'id de la commande et on l'envoie à la page de confirmation si le localStorage n'est pas vide
+      if (localStorage.length > 0){ 
+      window.location.href= " ./confirmation.html?orderId=" +confirm.orderId; 
       localStorage.clear();
+      }else{
+        //si le localStorage est vide, on affiche un message d'erreur
+        alert("Votre panier est vide")
+      }
+      
+    
+      
     }catch(error){
       console.log(error);
         }
