@@ -1,5 +1,14 @@
 //récupération orderId dans l'url
-function getParams(url = window.location) {
+let params= new URL(document.location).searchParams;
+let orderIdUrl = params.get("orderId");
+//affichage orderId dans la page confirmation
+let orderId = document.getElementById('orderId');
+let p = document.createElement('p');
+p.innerHTML = orderIdUrl;
+orderId.innerHTML = orderIdUrl;
+
+
+/*function getParams(url = window.location) {
     // Création d'un objet vide
     let params = {};
     // Création d'un objet URL à partir de l'url de la page 
@@ -12,10 +21,8 @@ function getParams(url = window.location) {
     });
     // Retour de l'objet params
     return params;
-}
-let p = document.createElement('p');
-p.setAttribute('orderId', getParams().orderId);
-orderId.innerHTML = getParams().orderId;
+}*/
+
 
 
 

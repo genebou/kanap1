@@ -1,18 +1,3 @@
-//création de la fonction getParams pour récupérer l'id du produit dans l'url   
-function getParams(url = window.location) {
-    // Création d'un objet vide
-    let params = {};
-    // Création d'un objet URL à partir de l'url de la page 
-    // (window.location est l'url de la page courante)
-    // (new URL(url) est un objet qui permet de manipuler l'url)
-    // (new URL(url).searchParams.forEach est une méthode qui permet de parcourir les paramètres de l'url)
-        new URL(url).searchParams.forEach(function (val, key) {
-            // Ajout des paramètres de l'URL dans l'objet params
-        params[key] = val;
-    });
-    // Retour de l'objet params
-    return params;
-}
 // Récupération des données de l'API 
 let title = document.getElementById('title')
 // création de la function onADdToBasket pour ajouter un produit au panier lors du clic sur le bouton "ajouter au panier"
@@ -78,10 +63,8 @@ function onAddToBasket(event) {
         basketItems = []
     }
     // on récupère l'id du produit dans l'url 
-    let params = getParams()
-    // on récupère l'id du produit dans l'url
-    var productId = params['id']
-    // si l'id du produit n'est pas défini ou égal à 0, on affiche la page 404
+let params= new URL(document.location).searchParams;
+let productId = params.get("id");    // si l'id du produit n'est pas défini ou égal à 0, on affiche la page 404
     if (typeof productId == "undefined" || productId == 0) {
         window.location.href = "/404.html";
     }
