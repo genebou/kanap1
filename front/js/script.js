@@ -23,8 +23,11 @@ fetch("http://localhost:3000/api/products")
         article.appendChild(h3)
         //mise en place HTML <p>
         let p = document.createElement('p')
+        //mise en place HTML <p>
         p.innerHTML = data[i].description
         article.appendChild(p)
+        // on ne crée pas d'ID pour items car il est déjà présent dans le HTML
+        // on ajoute les éléments <a> dans la div items
         document.getElementById('items').appendChild(a)
     }
    

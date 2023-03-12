@@ -6,7 +6,8 @@ var basketItems = window.localStorage.getItem('Basketitems');
 // si le panier est vide, on initialise le tableau basketItems
 if (basketItems === null){
     basketItems=[]
-}
+       
+    }
 else{ // sinon on parse les données du panier pour les transformer en tableau d'objets 
   basketItems=JSON.parse(basketItems)
 }
