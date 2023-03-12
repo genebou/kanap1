@@ -315,24 +315,76 @@ order.addEventListener('click', async (event) =>{
       products : productsId,
   } 
     
-    //reggex pour vérifier que firstName et lastName n'ont pas de chiffres
-    const regexfirstName = /^[a-zA-Z]+$/;
-    const regexlastName = /^[a-zA-Z]+$/;
-   
-  //si le nom ou le prénom ne respecte pas la reggex, on affiche un message d'erreur et on bloque l'envoi des données
-   if (!regexfirstName.test(firstName.value) || !regexlastName.test(lastName.value)){
-    alert("Veuillez entrer un nom et un prénom valide") 
-    console.log("nom ou prénom non valide")
+    //reggex pour vérifier que dans firstName il n'y a pas de nombre, ni de caractères spéciaux et qu'il y a au moins deux caractères
+    const regexfirstName = /^[a-zA-Z\u00C0-\u00FF\s,'-]{2,}$/; 
+   // reggex pour vérifier que dans lastName   il n'y a pas de nombre, ni de caractères spéciaux et qu'il y a au moins deux caractères
+    const regexlastName = /^[a-zA-Z\u00C0-\u00FF\s,'-]{2,}$/;
+    //reggex pour vérifier que dans city il n'y a pas de nombre, ni de caractères spéciaux et qu'il y a au moins deux caractères
+    const regexCity = /^[a-zA-Z\u00C0-\u00FF\s,'-]{2,}$/;
+      //reggex pour vérifier que l'email est valide et qu'il y a @ 
+    const regexEmail = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
+     //reggex pour vérifier que l'adresse est valide, qu'il y a des espaces entre les nombres et les mots et qu'il n'y a pas de caractères spéciaux
+    const regexAddress = /^[a-zA-Z0-9\s,'-]{5,}$/;
+      
+  //si firstName, lastName, address, city ou email ne respecte pas la reggex, on affiche un message d'erreur dans le champ dans lequel il y a une erreur et on bloque l'envoi des données
+  if (!regexfirstName.test(firstName.value)){ 
+    //message d'erreur en dessous du champ firstName
+    document.getElementById('firstNameErrorMsg').innerHTML = "Veuillez entrer un prénom valide"
+    console.log("firstName invalide")
+return
+// si firstName est valide après correction on supprime le message d'erreur
+  }else{
+    document.getElementById('firstNameErrorMsg').innerHTML = "" 
+  } 
+
+if 
+    (!regexlastName.test(lastName.value)){
+    //message d'erreur en dessous du champ lastName
+    document.getElementById('lastNameErrorMsg').innerHTML = "Veuillez entrer un nom valide"
+    console.log("lastName invalide")
+return
+// si lastName est valide après correction on supprime le message d'erreur
+  }else{
+    document.getElementById('lastNameErrorMsg').innerHTML = ""
+  }
+
+if (!regexAddress.test(address.value)){
+    //message d'erreur en dessous du champ address
+    document.getElementById('addressErrorMsg').innerHTML = "Veuillez entrer une adresse valide"
+    console.log("address invalide")
+return
+  }else{
+    document.getElementById('addressErrorMsg').innerHTML = ""
+  }
+
+if (!regexCity.test(city.value)){
+    //message d'erreur en dessous du champ city
+    document.getElementById('cityErrorMsg').innerHTML = "Veuillez entrer un nom de ville valide"
+    console.log("city invalide")
+return
+  }else{
+    document.getElementById('cityErrorMsg').innerHTML = ""
+  }
+if (!regexEmail.test(email.value)){
+    //message d'erreur en dessous du champ email
+    document.getElementById('emailErrorMsg').innerHTML = "Veuillez entrer un email valide"
+    console.log("email invalide")
+return
+  }else{
+    document.getElementById('emailErrorMsg').innerHTML = ""
+  }
+  //si le formulaire contient une erreur, on bloque l'envoi des données
+  if (firstName.value == "" || lastName.value == "" || address.value == "" || city.value == "" || email.value == ""){
+    alert("Veuillez modifier ou compléter le formulaire")
+    console.log("formulaire incomplet ou vide")
     return
   }
- 
-  //si le formulaire est vide,on affiche un message d'erreur et on bloque l'envoi des données
   
-  if (firstName.value == "" || lastName.value == "" || address.value == "" || city.value == "" || email.value == ""){
+  /*if (firstName.value == "" || lastName.value == "" || address.value == "" || city.value == "" || email.value == ""){
     alert("Veuillez remplir le formulaire")
     console.log("formulaire vide")
-    return
-  }
+    return*/
+  
   //sinon on envoie les données du client au serveur
    else {
     //transformation de l'objet en string
