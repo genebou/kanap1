@@ -1,4 +1,14 @@
-// Récupération des données de l'API 
+
+
+
+// Récupération de l'id du produit dans l'URL
+let params = new URL(document.location).searchParams;
+let productId = params.get('id');
+
+
+
+
+//Récupération des données de l'API 
 let title = document.getElementById('title')
 // création de la function onADdToBasket pour ajouter un produit au panier lors du clic sur le bouton "ajouter au panier"
 function onAddToBasket(event) {
@@ -63,8 +73,7 @@ function onAddToBasket(event) {
         basketItems = []
     }
     // on récupère l'id du produit dans l'url 
-let params= new URL(document.location).searchParams;
-let productId = params.get("id");    // si l'id du produit n'est pas défini ou égal à 0, on affiche la page 404
+  // si l'id du produit n'est pas défini ou égal à 0, on affiche la page 404
     if (typeof productId == "undefined" || productId == 0) {
         window.location.href = "/404.html";
     }
@@ -105,4 +114,3 @@ let productId = params.get("id");    // si l'id du produit n'est pas défini ou 
     )
         // au clic sur le bouton "ajouter au panier", on appelle la fonction onAddToBasket
     document.getElementById('addToCart').addEventListener('click', onAddToBasket)
-        
