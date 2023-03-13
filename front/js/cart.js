@@ -1,15 +1,17 @@
 //récapitulatif des produits dans le panier
-// création d'un tableau vide pour stocker les produits  du panier 
+// création d'un tableau vide pour stocker les produits(des objets) du panier
+
 var products = []
-// on récupère les données du panier dans le localStorage
+// on récupère les objets du panier dans le localStorage
 var basketItems = window.localStorage.getItem('Basketitems');
 // si le panier est vide, on initialise le tableau basketItems
 if (basketItems === null){
     basketItems=[]
        
     }
-else{ // sinon on parse les données du panier pour les transformer en tableau d'objets 
+else{ // sinon on parse les objets du panier pour les transformer en tableau d'objets 
   basketItems=JSON.parse(basketItems)
+  console.log(basketItems)
 }
 //  affichage des canapés dans le panier
 // Création d'une fonction asynchrone pour afficher les produits du panier 
@@ -38,7 +40,10 @@ async function renderBasket(){
       // on ajoute l'id du produit à la ID cart__items
       cartItem.setAttribute("data-id",product._id)
       // on ajoute la couleur du produit à la ID cart__items
-      cartItem.setAttribute("data-color",basketItems[i].color)
+      cartItem.setAttribute("data-color",basketItems.color)
+      //on affiche la couleur du produit dans p 
+      
+      console.log(basketItems[i].color)
 
       // création de la div cart__item__img
     let cartItemImg = document.createElement('div')
@@ -71,7 +76,7 @@ async function renderBasket(){
       // création de la couleur du produit html p
     let productColor = document.createElement('p');
       cartItemContentDescription.appendChild(productColor);
-      productColor.innerHTML = product.colors[i];
+      productColor.innerHTML = basketItems[i].color;
 
       // création du prix du produit html p
     let productPrice = document.createElement("p");
