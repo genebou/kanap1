@@ -174,7 +174,7 @@ function initSupprimer(){
 //création d'une fonction qui va supprimer l'item du localStorage
 function deleteBasketItems(id, color) {
   // on récupère les items du localStoragealert
-  alert(1)
+
   for (let i=basketItems.length-1; i >= 0 ;i--){
   // on parcourt les items du localStorage pour trouver l'id et la couleur du produit à supprimer 
       if (basketItems[i].id == id && basketItems[i].color == color) {
@@ -184,7 +184,7 @@ function deleteBasketItems(id, color) {
       window.localStorage.setItem('Basketitems', JSON.stringify(basketItems))
       // on supprime l'item du panier 
       document.querySelector(`[data-id="${id}"][data-color="${color}"]`).remove()
-      alert(2)
+    
       return
     }
      // document.querySelector(`[data-id="${id}"][data-color="${color}"]`).remove()
@@ -224,7 +224,7 @@ function deleteBasketItems(id, color) {
 //function qui met à jour la quantité d'un item dans le localStorage
 function deleteBasketQty(id, color, quantity){
   // on récupère les items du localStorage 
-  for (let i=0; i<basketItems.length; i++){
+  for (let i=0; i<basketItems[i].length; i++){
     // on parcourt les items du localStorage pour trouver l'id et la couleur du produit à modifier
     if ( basketItems[i].id== id && basketItems[i].color == color){
       // on modifie la quantité de l'item du localStorage 
