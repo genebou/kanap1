@@ -40,7 +40,7 @@ async function renderBasket(){
       // on ajoute l'id du produit à la ID cart__items
       cartItem.setAttribute("data-id",product._id)
       // on ajoute la couleur du produit à la ID cart__items
-      cartItem.setAttribute("data-color",basketItems.color)
+      cartItem.setAttribute("data-color",basketItems[i].color)
       //on affiche la couleur du produit dans p 
       
       console.log(basketItems[i].color)
@@ -173,7 +173,8 @@ function initSupprimer(){
 }
 //création d'une fonction qui va supprimer l'item du localStorage
 function deleteBasketItems(id, color) {
-  // on récupère les items du localStorage
+  // on récupère les items du localStoragealert
+  alert(1)
   for (let i=basketItems.length-1; i >= 0 ;i--){
   // on parcourt les items du localStorage pour trouver l'id et la couleur du produit à supprimer 
       if (basketItems[i].id == id && basketItems[i].color == color) {
@@ -183,8 +184,12 @@ function deleteBasketItems(id, color) {
       window.localStorage.setItem('Basketitems', JSON.stringify(basketItems))
       // on supprime l'item du panier 
       document.querySelector(`[data-id="${id}"][data-color="${color}"]`).remove()
+      alert(2)
       return
     }
+     // document.querySelector(`[data-id="${id}"][data-color="${color}"]`).remove()
+      //return
+   // }
   }
   initSupprimer()
 }
